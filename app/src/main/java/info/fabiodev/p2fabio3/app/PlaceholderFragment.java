@@ -21,6 +21,7 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -103,7 +104,9 @@ public class PlaceholderFragment extends Fragment {
     public void adiciona_na_tela(){
 
         try {
-            Pizza pizza = pizzaList.get(0);
+            Random rd = new Random();
+            int idx = rd.nextInt(pizzaList.size() -1);
+            Pizza pizza = pizzaList.get(idx);
             this.imageLoader.displayImage(pizza.getFoto(), this.imageView_principal);
             this.nome_pizza.setText(pizza.getNome());
             this.preco_pizza.setText("R$ " + pizza.getValor());
