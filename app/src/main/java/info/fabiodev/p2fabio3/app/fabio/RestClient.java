@@ -90,6 +90,7 @@ public class RestClient extends AsyncTask<String, Integer, String> {
                 //pizzas = new JSONArray(this.pizzasJsonArray);
                 pizzas_jsonObjectArrayList = new ArrayList<JSONObject>();
                 for (int i = 1; i < pizzasJsonArray.length(); i++) {
+
                     pizzas_jsonObjectArrayList.add(pizzasJsonArray.getJSONObject(i));
                 }
             } catch (JSONException e) {
@@ -126,8 +127,11 @@ public class RestClient extends AsyncTask<String, Integer, String> {
             Pizza pizza = null;
             try {
                 //pizza = new Pizza(jsonObject.getString("nome"), jsonObject.getString("tamanho"), jsonObject.getString("ingredientes"), jsonObject.getString("valor"), jsonObject.getString("foto"));
-                pizza = new Pizza(jsonObject);
-                this.pizzaList.add(pizza);
+                for(JSONObject p: this.pizzas_jsonObjectArrayList){
+                    pizzaList.add(new Pizza(p));
+                }
+                //pizza = new Pizza(jsonObject);
+                //this.pizzaList.add(pizza);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

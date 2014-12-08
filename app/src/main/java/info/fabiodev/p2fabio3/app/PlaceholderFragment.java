@@ -105,7 +105,11 @@ public class PlaceholderFragment extends Fragment {
 
         try {
             Random rd = new Random();
-            int idx = rd.nextInt( (int)(pizzaList.size()- 1)  );
+            int v = pizzaList.size();
+            if(v< 0){
+                v = 0;
+            }
+            int idx = rd.nextInt(v);
             Pizza pizza = pizzaList.get(idx);
             this.imageLoader.displayImage(pizza.getFoto(), this.imageView_principal);
             this.nome_pizza.setText(pizza.getNome());
