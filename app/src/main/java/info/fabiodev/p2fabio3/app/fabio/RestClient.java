@@ -124,7 +124,7 @@ public class RestClient extends AsyncTask<String, Integer, String> {
             Log.v("json-pizzasJsonArray", this.pizzasJsonArray.toString());
             Log.v("json-pizzas_jsonObjectArrayList", this.pizzas_jsonObjectArrayList.toString());
             JSONObject jsonObject = this.pizzas_jsonObjectArrayList.get(0);
-            Pizza pizza = null;
+            //Pizza pizza = null;
             try {
                 //pizza = new Pizza(jsonObject.getString("nome"), jsonObject.getString("tamanho"), jsonObject.getString("ingredientes"), jsonObject.getString("valor"), jsonObject.getString("foto"));
                 for(JSONObject p: this.pizzas_jsonObjectArrayList){
@@ -138,8 +138,8 @@ public class RestClient extends AsyncTask<String, Integer, String> {
 
 
             Log.v("json-pizzas_jsonObjectArrayList", pizzas_jsonObjectArrayList.toString());
-            assert pizza != null;
-            Log.v("pizza", pizza.toString());
+            //assert pizza != null;
+            //Log.v("pizza", pizza.toString());
 
             Toast.makeText(this.activity, "asdad", 5).show();
             Log.v("teste", "asdad");
