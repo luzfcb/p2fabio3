@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 
 import com.goebl.david.WebbException;
+import info.fabiodev.p2fabio3.app.PlaceholderFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +18,7 @@ import org.json.JSONObject;
 
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * https://github.com/hgoebl/DavidWebb
@@ -40,6 +42,8 @@ public class RestClient extends AsyncTask<String, Integer, String> {
     private final ProgressBar progressBar;
     private final ImageView imageView;
     private final ImageLoader imageLoader;
+    private final List<Pizza> pizzaList;
+    private final PlaceholderFragment placeholderFragment;
     private boolean sem_conexao_rede;
 
     public ArrayList<JSONObject> getPizzas_jsonObjectArrayList() {
@@ -60,11 +64,13 @@ public class RestClient extends AsyncTask<String, Integer, String> {
 
     }
 
-    public RestClient(Activity activity, ImageLoader imageLoader, ImageView imageView, ProgressBar progressBar) {
+    public RestClient(PlaceholderFragment placeholderFragment, Activity activity, ImageLoader imageLoader, ImageView imageView, ProgressBar progressBar, List<Pizza> pizzaList) {
+        this.placeholderFragment = placeholderFragment;
         this.progressBar = progressBar;
         this.imageLoader = imageLoader;
         this.imageView = imageView;
         this.activity = activity;
+        this.pizzaList = pizzaList;
     }
 
     @Override
@@ -106,35 +112,39 @@ public class RestClient extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String result) {
 
 
-        if(this.sem_conexao_rede){
+        if (this.sem_conexao_rede) {
             this.progressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(this.activity, "Nao ha conexao de rede\nVerifique sua conexão com a internet", 5).show();
             Log.v("RestClient", "Nao ha conexao de rede");
 
         }
         // TODO Auto-generated method stub
-        try{
-        Log.v("json-pizzasJsonArray", this.pizzasJsonArray.toString());
-        Log.v("json-pizzas_jsonObjectArrayList", this.pizzas_jsonObjectArrayList.toString());
-        JSONObject jsonObject = this.pizzas_jsonObjectArrayList.get(0);
-        Pizza pizza = null;
         try {
-            //pizza = new Pizza(jsonObject.getString("nome"), jsonObject.getString("tamanho"), jsonObject.getString("ingredientes"), jsonObject.getString("valor"), jsonObject.getString("foto"));
-            pizza = new Pizza(jsonObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            Log.v("json-pizzasJsonArray", this.pizzasJsonArray.toString());
+            Log.v("json-pizzas_jsonObjectArrayList", this.pizzas_jsonObjectArrayList.toString());
+            JSONObject jsonObject = this.pizzas_jsonObjectArrayList.get(0);
+            Pizza pizza = null;
+            try {
+                //pizza = new Pizza(jsonObject.getString("nome"), jsonObject.getString("tamanho"), jsonObject.getString("ingredientes"), jsonObject.getString("valor"), jsonObject.getString("foto"));
+                pizza = new Pizza(jsonObject);
+                this.pizzaList.add(pizza);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
-        Log.v("json-pizzas_jsonObjectArrayList", pizzas_jsonObjectArrayList.toString());
-        assert pizza != null;
-        Log.v("pizza", pizza.toString());
+            Log.v("json-pizzas_jsonObjectArrayList", pizzas_jsonObjectArrayList.toString());
+            assert pizza != null;
+            Log.v("pizza", pizza.toString());
 
-        Toast.makeText(this.activity, "asdad", 5).show();
-        Log.v("teste", "asdad");
-        imageLoader.displayImage(pizza.getFoto(), imageView);
-        this.progressBar.setVisibility(View.INVISIBLE);
-    }catch (Exception e){
+            Toast.makeText(this.activity, "asdad", 5).show();
+            Log.v("teste", "asdad");
+            //imageLoader.displayImage(pizza.getFoto(), imageView);
+
+            placeholderFragment.adiciona_na_tela();
+
+            this.progressBar.setVisibility(View.INVISIBLE);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

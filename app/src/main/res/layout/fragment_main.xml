@@ -13,15 +13,14 @@
         android:layout_height="wrap_content"
         android:text="Obter Dados"
         android:id="@+id/obter_dados"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignParentTop="true" android:layout_alignParentRight="true"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView_principal"
-        android:layout_below="@+id/obter_dados"
-        android:layout_centerHorizontal="true"/>
+        android:minHeight="100dp" android:minWidth="100dp"
+        android:longClickable="false" android:layout_below="@+id/obter_dados" android:layout_alignParentLeft="true"/>
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -29,5 +28,38 @@
         android:id="@+id/progressBar"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_alignTop="@+id/imageView_principal"
+            android:layout_toRightOf="@+id/imageView_principal" android:layout_alignRight="@+id/obter_dados"
+            android:text="" android:id="@+id/nome_pizza"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/preco_pizza"
+            android:minWidth="80dp" android:minHeight="60dp"
+            android:layout_below="@+id/imageView_principal" android:layout_alignRight="@+id/nome_pizza"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/ingredientes_pizza"
+            android:minHeight="60dp"
+            android:minWidth="60dp" android:layout_below="@+id/imageView_principal"
+            android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/preco_pizza"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=""
+            android:id="@+id/tamanho_pizza"
+            android:layout_below="@+id/nome_pizza" android:layout_toRightOf="@+id/imageView_principal"
+            android:layout_alignRight="@+id/preco_pizza" android:layout_above="@+id/preco_pizza"/>
+
 
 </RelativeLayout>

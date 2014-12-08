@@ -41,6 +41,10 @@ public class Pizza{
         this.foto = foto;
     }
 
+    public Pizza() {
+
+    }
+
     public Pizza(JSONObject jsonObject) throws JSONException {
         this(jsonObject.getString("nome"), jsonObject.getString("tamanho"), jsonObject.getString("ingredientes"), jsonObject.getString("valor"), jsonObject.getString("foto"));
 

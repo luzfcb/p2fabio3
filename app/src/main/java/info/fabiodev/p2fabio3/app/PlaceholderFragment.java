@@ -2,19 +2,25 @@ package info.fabiodev.p2fabio3.app;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import info.fabiodev.p2fabio3.app.fabio.Pizza;
 import info.fabiodev.p2fabio3.app.fabio.RestClient;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -29,6 +35,25 @@ public class PlaceholderFragment extends Fragment {
 
     @ViewById
     protected ProgressBar progressBar;
+
+    @ViewById
+    protected TextView preco_pizza;
+
+    @ViewById
+    protected TextView ingredientes_pizza;
+
+    @ViewById
+    protected TextView tamanho_pizza;
+
+    @ViewById
+    protected TextView nome_pizza;
+
+    protected List<Pizza> pizzaList;
+
+
+    public ImageLoader getImageLoader() {
+        return imageLoader;
+    }
 
     public PlaceholderFragment() {
     }
@@ -67,8 +92,28 @@ public class PlaceholderFragment extends Fragment {
 
     @Click(R.id.obter_dados)
     protected void obter_dados(){
-        RestClient restclient = new RestClient(this.getActivity(), this.imageLoader, this.imageView_principal, this.progressBar);
+
+        pizzaList = new ArrayList<Pizza>();
+
+        RestClient restclient = new RestClient(this, this.getActivity(), this.imageLoader, this.imageView_principal, this.progressBar, this.pizzaList);
         restclient.execute();
+
+    }
+
+    public void adiciona_na_tela(){
+
+        try {
+            Pizza pizza = pizzaList.get(0);
+            this.imageLoader.displayImage(pizza.getFoto(), this.imageView_principal);
+            this.nome_pizza.setText(pizza.getNome());
+            this.preco_pizza.setText("R$ " + pizza.getValor());
+            this.tamanho_pizza.setText(pizza.getTamanho());
+            this.ingredientes_pizza.setText(pizza.getIngredientes());
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.v("erro Placeholder", "erro Placeholder pizza");
+        }
+
 
     }
 
