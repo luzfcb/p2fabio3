@@ -1,0 +1,87 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        // replace with the current version of the Android plugin
+        classpath 'com.android.tools.build:gradle:0.13.0'
+
+        // Since Android's Gradle plugin 0.11, you have to use android-apt >= 1.3
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+repositories {
+        jcenter()
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile
+        // if you have multiple outputs (when using splits), you may want to have other index than 0
+
+        resourcePackageName 'info.fabiodev.p2fabio3.app'
+
+        // If you're using Android NBS flavors you should use the following line instead of hard-coded packageName
+        // resourcePackageName android.defaultConfig.packageName
+
+        // You can set optional annotation processing options here, like these commented options:
+        // logLevel 'INFO'
+        // logFile '/var/log/aa.log'
+    }
+}
+
+
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.1"
+
+    defaultConfig {
+        applicationId "info.fabiodev.p2fabio3.app"
+        minSdkVersion 15
+        targetSdkVersion 15
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+def AAVersion = 'XXX'
+
+dependencies {
+    apt "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Google Play Services
+    //compile 'com.google.android.gms:play-services:6.1.71'
+
+    // Support Libraries
+    //compile 'com.android.support:appcompat-v7:21.0.2'
+    compile 'com.android.support:cardview-v7:21.0.0'
+    compile 'com.android.support:gridlayout-v7:21.0.0'
+    //compile 'com.android.support:leanback-v17:21.0.0'
+    compile 'com.android.support:mediarouter-v7:21.0.0'
+    compile 'com.android.support:palette-v7:21.0.0'
+    compile 'com.android.support:recyclerview-v7:21.0.0'
+    compile 'com.android.support:support-annotations:21.0.0'
+    compile 'com.android.support:support-v13:21.0.0'
+    compile 'com.android.support:support-v4:21.0.2'
+
+    //compile 'org.springframework.webflow:org.springframework.webflow:2.0.5.RELEASE'
+
+
+
+    compile 'org.androidannotations:androidannotations:3.2'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    compile 'com.goebl:david-webb:1.1.0'
+}
