@@ -18,3 +18,5 @@ e marque a caixa "enable annotation processing"
 
 
 execute o build clicando no play.
+
+os arquivos APK são gerados dentro da pasta "app/build/outputs/apk"
