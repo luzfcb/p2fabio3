@@ -1,0 +1,20 @@
+Para rodar esse projeto:
+
+baixe e instale o IntelliJ IDEA Pro 14 ou superior: http://www.jetbrains.com/idea/
+
+Baixe e instale o gradle
+
+Abra o IntelliJ IDEA Pro 14, clique em open,
+
+selecione o arquivo P2Fabio3.iml,
+
+Ative o Android SDK 15
+
+Ative o processamento de anotações no menu:
+
+File -> Settings -> Build, Execution, Deployment -> Annotation Processors
+
+e marque a caixa "enable annotation processing"
+
+
+execute o build clicando no play.
