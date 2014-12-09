@@ -2,7 +2,9 @@ Para rodar esse projeto:
 
 baixe e instale o IntelliJ IDEA Pro 14 ou superior: http://www.jetbrains.com/idea/
 
-Baixe e instale o gradle
+Baixe e instale o gradle e configure a variavel de ambiente do mesmo
+
+Configure a variavel de ambiente ANDROID_HOME
 
 Abra o IntelliJ IDEA Pro 14, clique em open,
 
