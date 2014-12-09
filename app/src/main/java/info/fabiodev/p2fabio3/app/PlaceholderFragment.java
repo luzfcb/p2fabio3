@@ -1,23 +1,33 @@
 package info.fabiodev.p2fabio3.app;
 
 import android.app.Fragment;
-import android.os.Bundle;
+
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import info.fabiodev.p2fabio3.app.fabio.Pizza;
 import info.fabiodev.p2fabio3.app.fabio.RestClient;
+
+/**
+ * excilys Android Annotations
+ * https://github.com/excilys/androidannotations/wiki/HowItWorks
+ */
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+
+/**
+ * nostra13 Android-Universal-Image-Loader
+ * https://github.com/nostra13/Android-Universal-Image-Loader#usage
+ */
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +59,9 @@ public class PlaceholderFragment extends Fragment {
     @ViewById
     protected TextView nome_pizza;
 
+    @ViewById
+    protected Button obter_dados;
+
     protected List<Pizza> pizzaList;
 
 
@@ -70,22 +83,23 @@ public class PlaceholderFragment extends Fragment {
     @AfterViews
     void configuracao_inicial() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                //.cacheInMemory(true)
-                .cacheOnDisk(true)
+                .cacheInMemory(true) //ativa cache de imagem em memoria
+                .cacheOnDisk(true) //ativa cache de imagem em disco (dentro da pasta MemoriaInterna/Android/pacote.da.aplicacao/)
                 .build();
 
-        // Create global configuration and initialize ImageLoader with this config
+        // Cria configuração global e inicializa ImageLoader com essas configurações
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.getActivity())
                 .defaultDisplayImageOptions(defaultOptions)
                 .writeDebugLogs()
                 .build();
+
         //ImageLoader.getInstance().init(config);
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(config);
 
         //ImageLoaderConfiguration config = new ImagafterViewseLoaderConfiguration.Builder(getApplicationContext())
 
-
+        pizzaList = new ArrayList<Pizza>();
 
         this.progressBar.setVisibility(View.INVISIBLE);
     }
@@ -94,10 +108,14 @@ public class PlaceholderFragment extends Fragment {
     @Click(R.id.obter_dados)
     protected void obter_dados(){
 
-        pizzaList = new ArrayList<Pizza>();
-
-        RestClient restclient = new RestClient(this, this.getActivity(), this.imageLoader, this.imageView_principal, this.progressBar, this.pizzaList);
-        restclient.execute();
+        if(this.pizzaList.size() <= 0) {
+            // Executa o cliente rest em uma outra thread
+            RestClient restclient = new RestClient(this, this.getActivity(), this.imageLoader, this.imageView_principal, this.progressBar, this.pizzaList);
+            restclient.execute();
+        }else{
+            //this.obter_dados.setText("Mostrar outro");
+            this.adiciona_na_tela();
+        }
 
     }
 
@@ -116,6 +134,7 @@ public class PlaceholderFragment extends Fragment {
             this.preco_pizza.setText("R$ " + pizza.getValor());
             this.tamanho_pizza.setText(pizza.getTamanho());
             this.ingredientes_pizza.setText(pizza.getIngredientes());
+            this.obter_dados.setText("Mostrar outro");
         }catch (Exception e){
             e.printStackTrace();
             Log.v("erro Placeholder", "erro Placeholder pizza");
